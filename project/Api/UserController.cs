@@ -10,8 +10,13 @@ public class UserController : ControllerBase
 
 
   [HttpGet]
-  public ActionResult<User> Get([FromQuery] string immutableId) {
+  public ActionResult<User> Get([Required] [FromQuery] string immutableId) {
     var user = _userService.GetByImmutableId(immutableId);
+
+    if( user == null) {
+      return NotFound();
+    }
+
     return Ok(user);
   }
 }
